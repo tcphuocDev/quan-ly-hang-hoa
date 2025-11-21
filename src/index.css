@@ -1,56 +1,88 @@
+/* (Giữ các rules gradient + glassmorphism đã có) */
+html,
+body,
+#root {
+  height: 100%;
+}
 body {
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  background: #f5f7fa;
-  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  background: linear-gradient(
+      135deg,
+      rgba(25, 118, 210, 0.9) 0%,
+      rgba(123, 31, 162, 0.88) 45%,
+      rgba(0, 188, 212, 0.85) 100%
+    ),
+    radial-gradient(
+      600px 400px at 10% 20%,
+      rgba(255, 255, 255, 0.04),
+      transparent 20%
+    ),
+    radial-gradient(
+      500px 300px at 90% 80%,
+      rgba(0, 0, 0, 0.06),
+      transparent 20%
+    );
+  background-blend-mode: overlay, normal, normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #111827;
 }
-.app-container {
-  max-width: 1000px;
-  margin: 20px auto;
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-.navbar {
+
+/* Ensure login page centers even without global Navbar */
+.login-page {
+  min-height: calc(100vh - 0px); /* no navbar height substracted */
   display: flex;
-  gap: 12px;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 12px;
+  justify-content: center;
+  padding: 40px 16px;
+  box-sizing: border-box;
 }
-.btn {
-  padding: 8px 12px;
-  cursor: pointer;
-  border: 1px solid #ddd;
+
+/* Glass card */
+.login-card {
+  width: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* small screens */
+@media (max-width: 480px) {
+  .login-card {
+    width: 92%;
+  }
+}
+
+.ant-layout {
+  background: transparent;
+}
+
+.ant-layout-header {
+  padding: 0; /* Navbar component sets its own padding */
+  background: transparent;
+}
+
+/* Ensure sider and content backgrounds are white (or adjust as needed) */
+.ant-layout-sider,
+.ant-layout-content,
+.ant-layout {
+  background: transparent;
+}
+
+/* If you want the entire content area to have white background (card-like), set here */
+.ant-layout-content > .ant-card,
+.app-container {
   background: #fff;
-  border-radius: 6px;
 }
-.btn-primary {
-  background: #1976d2;
-  color: #fff;
-  border-color: #1976d2;
-}
-.form {
-  max-width: 420px;
-}
-.field {
-  margin-bottom: 8px;
-}
-.field input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-.menu {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-.card {
-  border: 1px solid #eee;
-  padding: 12px;
-  border-radius: 6px;
-  margin-top: 12px;
+
+/* Small responsive tweaks */
+@media (max-width: 800px) {
+  .ant-layout-sider {
+    display: none; /* optional: hide sider on small screens */
+  }
 }

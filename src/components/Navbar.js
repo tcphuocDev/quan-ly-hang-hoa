@@ -1,40 +1,98 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Layout, Menu, Button, Avatar, Dropdown, Space } from "antd";
+import {
+  UserOutlined,
+  LogoutOutlined,
+  DashboardOutlined,
+  MenuOutlined,
+} from "@ant-design/icons";
 import { useAuth } from "../AuthContext";
+import LogoImg from "../assets/Logo.jpg";
+const { Header } = Layout;
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const nav = useNavigate();
+
+  const userMenu = (
+    <Menu selectable={false}>
+      <Menu.Item key="profile" onClick={() => nav("/dashboard")}>
+        Hồ sơ
+      </Menu.Item>
+      <Menu.Item
+        key="logout"
+        onClick={() => {
+          logout();
+          nav("/login");
+        }}
+      >
+        <Space>
+          <LogoutOutlined /> Đăng xuất
+        </Space>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className="navbar">
-      <strong>Quản lý Hàng hoá</strong>
-      <div style={{ flex: 1 }} />
-      {user ? (
-        <>
-          <span>Xin chào, {user.name}</span>
-          <button className="btn" onClick={() => nav("/dashboard")}>
-            Dashboard
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              logout();
-              nav("/login");
-            }}
+    <Header
+      style={{
+        background: "#fff",
+        padding: "0 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+        zIndex: 10,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <img
+            src={LogoImg}
+            alt="Logo"
+            style={{ height: 36, objectFit: "contain" }}
+          />
+          <span style={{ fontWeight: 600, color: "#111" }}>
+            Quản lý Hàng hoá
+          </span>
+        </Link>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        {/* Add any top-level actions here if needed */}
+        {user ? (
+          <Dropdown
+            overlay={userMenu}
+            placement="bottomRight"
+            trigger={["click"]}
           >
-            Đăng xuất
-          </button>
-        </>
-      ) : (
-        <>
-          <Link to="/login">
-            <button className="btn">Đăng nhập</button>
-          </Link>
-          <Link to="/register">
-            <button className="btn">Đăng ký</button>
-          </Link>
-        </>
-      )}
-    </div>
+            <div
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <Avatar
+                src={user.avatar}
+                icon={!user.avatar ? <UserOutlined /> : null}
+              />
+              <span style={{ color: "#111" }}>{user.name}</span>
+            </div>
+          </Dropdown>
+        ) : (
+          <>
+            <Link to="/login">
+              <Button>Đăng nhập</Button>
+            </Link>
+            <Link to="/register">
+              <Button type="primary">Đăng ký</Button>
+            </Link>
+          </>
+        )}
+      </div>
+    </Header>
   );
 }

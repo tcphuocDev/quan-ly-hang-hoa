@@ -1,49 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
+import { Form, Input, Button, Card, Typography, message } from "antd";
 import { useAuth } from "../AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
+const { Title } = Typography;
+
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [err, setErr] = useState("");
 
-  async function onSubmit(e) {
-    e.preventDefault();
+  const onFinish = (values) => {
     try {
-      login({ email, password });
+      login(values);
+      message.success("Đăng nhập thành công");
       navigate("/dashboard");
     } catch (e) {
-      setErr(e.message);
+      message.error(e.message);
     }
-  }
+  };
 
   return (
-    <div className="app-container">
-      <h2>Đăng nhập</h2>
-      <form className="form" onSubmit={onSubmit}>
-        {err && <div style={{ color: "red" }}>{err}</div>}
-        <div className="field">
-          <label>Email</label>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+    <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
+      <Card style={{ width: 420 }}>
+        <Title level={4}>Đăng nhập</Title>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true, message: "Nhập email" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Mật khẩu"
+            rules={[{ required: true, message: "Nhập mật khẩu" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Đăng nhập
+            </Button>
+          </Form.Item>
+        </Form>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Link to="/forgot">Quên mật khẩu?</Link>
+          <Link to="/register">Đăng ký</Link>
         </div>
-        <div className="field">
-          <label>Mật khẩu</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button className="btn btn-primary" type="submit">
-          Đăng nhập
-        </button>
-      </form>
-      <div style={{ marginTop: 12 }}>
-        <Link to="/forgot">Quên mật khẩu?</Link> ·{" "}
-        <Link to="/register">Đăng ký</Link>
-      </div>
+      </Card>
     </div>
   );
 }
