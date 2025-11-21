@@ -18,7 +18,7 @@ function seedDefaultUsersIfEmpty() {
         id: 1,
         name: "Admin",
         email: "admin@example.com",
-        password: "Admin123!",
+        password: "Admin123",
         avatar: "/assets/logo.png",
         role: "admin",
       },

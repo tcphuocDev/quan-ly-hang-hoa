@@ -23,6 +23,7 @@ ChartJS.register(
   Legend,
   Filler
 );
+import LogoImg from "../assets/Logo.jpg";
 
 const { Content, Sider } = Layout;
 
@@ -126,7 +127,7 @@ export default function Dashboard() {
             to="/"
             style={{ display: "flex", alignItems: "center", gap: 8 }}
           >
-            <img src="/assets/logo.png" alt="Logo" style={{ height: 34 }} />
+            <img src={LogoImg} alt="Logo" style={{ height: 34 }} />
           </Link>
         </div>
         <Menu
@@ -148,7 +149,7 @@ export default function Dashboard() {
 
       <Layout>
         {/* Navbar placed here so Header width matches content area (not full window) */}
-        <Navbar />
+        {/* <Navbar /> */}
 
         <Content style={{ padding: 24 }}>
           <Row gutter={[16, 16]}>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Layout, Menu, Button, Avatar, Dropdown, Space } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useAuth } from "../AuthContext";
-
+import LogoImg from "../assets/Logo.jpg";
 const { Header } = Layout;
 
 export default function Navbar() {
@@ -12,7 +12,7 @@ export default function Navbar() {
 
   const userMenu = (
     <Menu selectable={false}>
-      <Menu.Item key="profile" onClick={() => nav("/dashboard")}> 
+      <Menu.Item key="profile" onClick={() => nav("/dashboard")}>
         Hồ sơ
       </Menu.Item>
       <Menu.Item
@@ -45,7 +45,7 @@ export default function Navbar() {
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 12 }}>
           {/* Use public/assets path for static files placed in public/ */}
           <img
-            src="/assets/Logo.jpg"
+            src={LogoImg}
             alt="Logo"
             style={{ height: 36, objectFit: "contain" }}
             onError={(e) => {
@@ -53,13 +53,19 @@ export default function Navbar() {
               e.currentTarget.src = "/assets/product-placeholder.jpg";
             }}
           />
-          <span style={{ fontWeight: 600, color: "#111" }}>Quản lý Hàng hoá</span>
+          <span style={{ fontWeight: 600, color: "#111" }}>
+            Quản lý Hàng hoá
+          </span>
         </Link>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         {user ? (
-          <Dropdown overlay={userMenu} placement="bottomRight" trigger={["click"]}>
+          <Dropdown
+            overlay={userMenu}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
             <div
               style={{
                 cursor: "pointer",
@@ -68,7 +74,10 @@ export default function Navbar() {
                 gap: 8,
               }}
             >
-              <Avatar src={user.avatar} icon={!user.avatar ? <UserOutlined /> : null} />
+              <Avatar
+                src={user.avatar}
+                icon={!user.avatar ? <UserOutlined /> : null}
+              />
               <span style={{ color: "#111" }}>{user.name}</span>
             </div>
           </Dropdown>
